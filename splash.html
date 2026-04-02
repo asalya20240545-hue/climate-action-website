@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome — Climate Action</title>
+
+    <!-- Auto redirect to HOME page -->
+    <meta http-equiv="refresh" content="4;url=index.html">
+
+    <link rel="stylesheet" href="CWK/style.css">
+
+    <style>
+
+        body {
+            margin: 0;
+            height: 100vh;
+            font-family: var(--ff-body);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: url('images/climate2.jpg') no-repeat center/cover;
+            color: var(--warm-white);
+            text-align: center;
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(14,28,20,0.75);
+        }
+
+        .splash-content {
+            position: relative;
+            z-index: 2;
+            max-width: 650px;
+        }
+
+        .title {
+            font-family: var(--ff-display);
+            font-size: 3rem;
+            color: var(--mist);
+            margin-bottom: 10px;
+        }
+
+        .tag {
+            font-size: 0.7rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--sage);
+            margin-bottom: 25px;
+        }
+
+        .mission {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: rgba(247,243,236,0.75);
+            margin-bottom: 25px;
+        }
+
+        .members {
+            font-size: 0.9rem;
+            color: rgba(184,217,196,0.75);
+            margin-bottom: 30px;
+        }
+
+        .loader {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 3px solid rgba(184,217,196,0.2);
+            border-top: 3px solid var(--sage);
+            margin: 25px auto;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        .countdown {
+            font-size: 0.95rem;
+            color: rgba(247,243,236,0.7);
+        }
+
+        .skip-btn {
+            margin-top: 25px;
+            padding: 10px 22px;
+            border: 1px solid var(--sage);
+            background: transparent;
+            color: var(--mist);
+            cursor: pointer;
+        }
+
+        .skip-btn:hover {
+            background: var(--sage);
+            color: var(--forest);
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="overlay"></div>
+
+    <div class="splash-content">
+
+        <h1 class="title">Climate Action</h1>
+
+        <div class="tag">SDG 13 — Climate Action</div>
+
+        <p class="mission">
+            Empowering individuals to understand climate change and take meaningful actions towards a sustainable future.
+        </p>
+
+        <p class="members">
+            Developed by: Menash | Adeeb | Asalya | Alba
+        </p>
+
+        <div class="loader"></div>
+
+        <div class="countdown">
+            Entering the website in <span id="timer">4</span> seconds...
+        </div>
+
+        <button class="skip-btn" onclick="skipIntro()">Skip Introduction</button>
+
+    </div>
+
+    <script>
+        let timeLeft = 4;
+        const timer = document.getElementById("timer");
+
+        const countdown = setInterval(() => {
+            timeLeft--;
+            timer.textContent = timeLeft;
+
+            if (timeLeft === 0) {
+                clearInterval(countdown);
+            }
+        }, 1000);
+
+        function skipIntro() {
+            window.location.href = "index.html";
+        }
+    </script>
+
+</body>
+</html>

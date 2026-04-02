@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery — Climate Action (SDG 13)</title>
+    <link rel="stylesheet" href="CWK/style.css">
+</head>
+<body class="gallery-page">
+
+    <header>
+        <nav>
+            <a href="home.html" class="nav-logo">Climate Action</a>
+            <ul class="nav-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="gallery.html" class="active">Gallery</a></li>
+                <li><a href="ais.html">Action Simulator</a></li>
+                <li><a href="feedback.html">Feedback</a></li>
+                <li><a href="team.html">Team</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="sitemap.html">Sitemap</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <section class="gallery-page-header">
+            <span class="section-label" style="color:var(--sage)">Visual Evidence</span>
+            <h1>Climate Change<br><em>Around the World</em></h1>
+            <p class="gallery-desc">A visual record of our changing planet. Click any image to explore it in detail.</p>
+        </section>
+
+        <section class="gallery-section">
+            <div class="gallery-grid">
+
+                <div class="gallery-item"
+                     tabindex="0"
+                     data-title="Forest Fire"
+                     data-desc="Wildfires are becoming more frequent and destructive as global temperatures rise. Higher temperatures dry out vegetation, creating ideal fuel for fires. In 2023 alone, over 7 million hectares burned across Europe — a record. Climate change doesn't cause wildfires, but it makes them far worse and far harder to contain.">
+                    <img src="images/climate2.jpg" alt="Raging wildfire with orange flames and thick smoke engulfing a forest">
+                    <div class="gallery-overlay">
+                        <span class="overlay-caption">Forest Fire</span>
+                        <span class="overlay-hint">Click to expand</span>
+                    </div>
+                </div>
+
+                <div class="gallery-item"
+                     tabindex="0"
+                     data-title="Melting Glacier"
+                     data-desc="Glaciers worldwide are retreating at unprecedented rates. Since 1950, glaciers have lost over 9,000 gigatonnes of ice. Meltwater raises sea levels and threatens freshwater supplies for billions of people who depend on glacial rivers for drinking water and agriculture.">
+                    <img src="images/climate3.jpg" alt="A large glacier with visible meltwater streams running off its surface">
+                    <div class="gallery-overlay">
+                        <span class="overlay-caption">Melting Glacier</span>
+                        <span class="overlay-hint">Click to expand</span>
+                    </div>
+                </div>
+
+                <div class="gallery-item"
+                     tabindex="0"
+                     data-title="Extreme Flooding"
+                     data-desc="Climate change intensifies the water cycle — warmer air holds more moisture, leading to heavier rainfall and flash floods. Flooding is now the most common natural disaster globally, affecting over 2 billion people since 2000 and causing hundreds of billions in economic damage annually.">
+                    <img src="images/climate4.jpg" alt="Flooded streets with submerged vehicles and homes in a residential area">
+                    <div class="gallery-overlay">
+                        <span class="overlay-caption">Extreme Flooding</span>
+                        <span class="overlay-hint">Click to expand</span>
+                    </div>
+                </div>
+
+                <div class="gallery-item"
+                     tabindex="0"
+                     data-title="Extreme Drought"
+                     data-desc="Droughts are lengthening and intensifying across the globe. The UN estimates that by 2050, around 5 billion people could face water shortages. Severe droughts devastate agriculture, drive displacement, and can trigger regional conflict over scarce water and food resources.">
+                    <img src="images/climate1.jpg" alt="Severely cracked, dry earth during a prolonged drought">
+                    <div class="gallery-overlay">
+                        <span class="overlay-caption">Extreme Drought</span>
+                        <span class="overlay-hint">Click to expand</span>
+                    </div>
+                </div>
+
+                <div class="gallery-item"
+                     tabindex="0"
+                     data-title="Rising Sea Levels"
+                     data-desc="Sea levels have risen around 20 cm since 1900, and the rate is accelerating due to ice sheet loss and thermal expansion of oceans. Low-lying coastal cities — including Miami, Jakarta, and Mumbai — face increasing flood risk, threatening tens of millions of homes and livelihoods.">
+                    <img src="images/climate4.jpg" alt="Ocean waves crashing over a low coastal road during a powerful storm">
+                    <div class="gallery-overlay">
+                        <span class="overlay-caption">Rising Sea Levels</span>
+                        <span class="overlay-hint">Click to expand</span>
+                    </div>
+                </div>
+
+                <div class="gallery-item"
+                     tabindex="0"
+                     data-title="Air Pollution"
+                     data-desc="Burning fossil fuels releases both particulate matter and greenhouse gases simultaneously. The WHO estimates air pollution kills 7 million people annually. Carbon emissions from the same sources accelerate global warming, creating a dual crisis of public health and climate change.">
+                    <img src="images/climate10.jpg" alt="Industrial factory chimneys releasing thick smoke into a grey haze-filled sky">
+                    <div class="gallery-overlay">
+                        <span class="overlay-caption">Air Pollution</span>
+                        <span class="overlay-hint">Click to expand</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal -->
+    <div id="gallery-modal" class="gallery-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <button id="modal-close" class="modal-close-btn" aria-label="Close image viewer">✕</button>
+        <div class="gallery-modal-inner">
+            <div class="modal-image-wrap">
+                <img id="modal-img" src="images/placeholder.jpg" alt="Expanded gallery image">
+            </div>
+            <div class="modal-details" id="modal-details">
+                <h2 id="modal-title">Image title</h2>
+                <p class="modal-desc" id="modal-desc"></p>
+                <div class="modal-controls">
+                    <p class="controls-label">Customise this view</p>
+                    <div class="control-row">
+                        <label for="colour-scheme">Colour</label>
+                        <select id="colour-scheme">
+                            <option value="default">Dark (default)</option>
+                            <option value="light">Light / ivory</option>
+                            <option value="warm">Warm earth</option>
+                            <option value="contrast">High contrast</option>
+                        </select>
+                    </div>
+                    <div class="control-row">
+                        <label for="font-style">Typeface</label>
+                        <select id="font-style">
+                            <option value="sans">Sans-serif (default)</option>
+                            <option value="serif">Serif / editorial</option>
+                            <option value="mono">Monospace</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-brand">
+            <span class="footer-logo">Climate Action</span>
+            <p>University of Westminster — SDG 13</p>
+        </div>
+        <div class="footer-links">
+            <a href="pageEditor_ST1.html">Page Editor</a>
+            <a href="validation_ST1.html">Validation</a>
+            <a href="#">Accessibility</a>
+        </div>
+        <div class="footer-meta">
+            <p>Student 1 — Gallery</p>
+            <p>&copy; 2026 Climate Action Group</p>
+        </div>
+    </footer>
+
+    <script src="gallery.js"></script>
+    <script>
+        document.querySelectorAll('a[href]').forEach(link => {
+            const href = link.getAttribute('href');
+            if (!href || href.startsWith('#') || href.startsWith('http')) return;
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                document.body.classList.add('fade-out');
+                setTimeout(() => { window.location.href = href; }, 350);
+            });
+        });
+    </script>
+
+</body>
+</html>

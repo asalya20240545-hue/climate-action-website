@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile — Climate Action</title>
+    <link rel="stylesheet" href="CWK/style.css">
+
+    <!-- ============================================================
+         PROFILE PAGE — Embedded CSS (page-specific only)
+         All rules commented, no conflicts with style.css
+         ============================================================ -->
+    <style>
+
+        /* 1. Dark hero banner — radial forest gradient matches index.html hero */
+        .profile-hero {
+            background:
+                radial-gradient(ellipse 60% 80% at 0% 100%, rgba(46,107,71,0.45) 0%, transparent 55%),
+                linear-gradient(160deg, #0e1c14 0%, #1b3a28 70%, #0a1a0e 100%);
+            padding: 120px 52px 72px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 2. Subtle editorial grid texture — repeated from hero pattern */
+        .profile-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(184,217,196,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(184,217,196,0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+        }
+
+        /* 3. Large decorative letter — typographic watermark matching index.html deco-num */
+        .profile-hero-deco {
+            position: absolute;
+            right: -1vw;
+            bottom: -2vh;
+            font-family: var(--ff-display);
+            font-size: clamp(12rem, 20vw, 24rem);
+            font-weight: 700;
+            color: rgba(184,217,196,0.04);
+            line-height: 1;
+            pointer-events: none;
+            user-select: none;
+            letter-spacing: -0.05em;
+        }
+
+        /* 4. Hero content zone — z-index above pseudo-element texture */
+        .profile-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+        }
+
+        .profile-hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.68rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--sage);
+            font-weight: 500;
+            margin-bottom: 28px;
+        }
+
+        .profile-hero-tag::before {
+            content: '';
+            width: 32px; height: 1px;
+            background: var(--sage);
+            display: block;
+        }
+
+        .profile-hero h1 {
+            color: var(--warm-white);
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            margin-bottom: 18px;
+            line-height: 1.05;
+        }
+
+        .profile-hero h1 strong {
+            font-weight: 700;
+            display: block;
+        }
+
+        .profile-hero-sub {
+            font-size: 0.95rem;
+            color: rgba(247,243,236,0.5);
+            max-width: 480px;
+            line-height: 1.75;
+            font-weight: 300;
+        }
+
+        /* 5. Body wrapper — max-width and padding matching mission section */
+        .profile-body {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 80px 52px;
+        }
+
+        /* 6. Action button row */
+        .profile-controls {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 48px;
+            align-items: center;
+        }
+
+        /* 7. Progress block — forest background matching explore section */
+        .progress-block {
+            background: var(--forest);
+            border-radius: 4px;
+            padding: 28px 32px;
+            margin-bottom: 48px;
+        }
+
+        .progress-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 14px;
+        }
+
+        .progress-label {
+            font-size: 0.68rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(184,217,196,0.5);
+            font-weight: 500;
+        }
+
+        .progress-pct {
+            font-family: var(--ff-display);
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--mist);
+            line-height: 1;
+        }
+
+        .progress-track {
+            height: 3px;
+            background: rgba(184,217,196,0.15);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--sage);
+            border-radius: 2px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        /* 8. Step pill buttons inside progress block */
+        .step-pills {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .step-pill {
+            font-size: 0.68rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 500;
+            padding: 5px 14px;
+            border-radius: 2px;
+            border: 1px solid rgba(184,217,196,0.15);
+            color: rgba(184,217,196,0.35);
+            cursor: pointer;
+            transition: all 0.2s;
+            background: transparent;
+            font-family: var(--ff-body);
+        }
+
+        .step-pill.active {
+            background: rgba(184,217,196,0.12);
+            border-color: var(--sage);
+            color: var(--sage);
+        }
+
+        .step-pill.done {
+            border-color: rgba(90,158,114,0.4);
+            color: rgba(90,158,114,0.7);
+        }
+
+        /* 9. Status text line */
+        .profile-status {
+            font-size: 0.82rem;
+            color: #8a9e8f;
+            margin-bottom: 32px;
+            min-height: 1.4em;
+            font-style: italic;
+        }
+
+        .profile-status.good { color: var(--moss); font-style: normal; }
+        .profile-status.done { color: var(--forest); font-weight: 600; font-style: normal; }
+
+        /* 10. Profile output card — hidden until step 1 completes */
+        .profile-card {
+            display: none;
+            border: 1px solid var(--parchment);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 48px;
+        }
+
+        .profile-card.visible { display: block; }
+
+        .profile-card-head {
+            background: var(--forest);
+            padding: 18px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .profile-card-head h2 {
+            font-size: 0.62rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(184,217,196,0.45);
+            font-weight: 500;
+            margin: 0;
+        }
+
+        .profile-badge {
+            font-size: 0.68rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--sage);
+            font-weight: 500;
+        }
+
+        /* 11. Three-column grid for profile blocks */
+        .profile-cols {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--parchment);
+        }
+
+        /* 12. Individual step blocks — revealed progressively with animation */
+        .profile-block {
+            background: var(--warm-white);
+            padding: 32px;
+            display: none;
+        }
+
+        .profile-block.revealed {
+            display: block;
+            animation: blockReveal 0.4s ease forwards;
+        }
+
+        @keyframes blockReveal {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .block-label {
+            font-size: 0.62rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--sage);
+            font-weight: 500;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--parchment);
+        }
+
+        /* 13. Profile field label/value pairs inside .profile-block */
+        .pf-label {
+            font-size: 0.62rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: #9aaa9d;
+            font-weight: 500;
+            margin: 14px 0 3px 0;
+        }
+
+        .pf-label:first-of-type { margin-top: 0; }
+
+        .pf-value {
+            font-size: 0.9rem;
+            color: var(--forest);
+            margin: 0 0 2px 0;
+            line-height: 1.55;
+        }
+
+        .pf-value.skipped {
+            color: #c0bab0;
+            font-style: italic;
+            font-size: 0.82rem;
+        }
+
+        /* 14. Completion banner (dark gradient, italic display font) */
+        .completion-banner {
+            display: none;
+            background: linear-gradient(135deg, #1b3a28 0%, #0e1c14 100%);
+            border-radius: 4px;
+            padding: 36px 40px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .completion-banner::before {
+            content: '✓';
+            position: absolute;
+            right: 36px; top: 50%;
+            transform: translateY(-50%);
+            font-family: var(--ff-display);
+            font-size: 8rem;
+            color: rgba(184,217,196,0.07);
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        .completion-banner.show { display: block; animation: blockReveal 0.5s ease; }
+
+        .completion-banner p {
+            font-family: var(--ff-display);
+            font-size: clamp(1.3rem, 2vw, 1.7rem);
+            font-weight: 400;
+            font-style: italic;
+            color: var(--mist);
+            margin: 0 0 8px;
+        }
+
+        .completion-banner small {
+            font-size: 0.78rem;
+            color: rgba(184,217,196,0.5);
+        }
+
+        /* 15. Revisit drawer */
+        .revisit-panel {
+            display: none;
+            background: var(--ivory);
+            border: 1px solid var(--parchment);
+            border-radius: 4px;
+            padding: 24px 28px;
+            margin-bottom: 36px;
+        }
+
+        .revisit-panel.show { display: block; }
+
+        .revisit-panel h3 {
+            font-size: 0.68rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--moss);
+            font-weight: 500;
+            margin: 0 0 16px;
+        }
+
+        .revisit-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+
+        /* 16. Responsive breakpoints */
+        @media (max-width: 900px) {
+            .profile-hero  { padding: 100px 20px 60px; }
+            .profile-body  { padding: 60px 20px; }
+            .profile-cols  { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 600px) {
+            .profile-controls { flex-direction: column; align-items: stretch; }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- SHARED HEADER — identical structure to index.html / team.html -->
+    <header>
+        <nav>
+            <a href="home.html" class="nav-logo">Climate Action</a>
+            <ul class="nav-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="ais.html">Action Simulator</a></li>
+                <li><a href="feedback.html">Feedback</a></li>
+                <li><a href="team.html">Team</a></li>
+                <li><a href="profile.html" class="active">Profile</a></li>
+                <li><a href="sitemap.html">Sitemap</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- ── HERO ── -->
+        <section class="profile-hero">
+            <div class="profile-hero-deco" aria-hidden="true">P</div>
+            <div class="profile-hero-content">
+                <span class="profile-hero-tag">SDG 13 — Climate Action</span>
+                <h1>
+                    Your climate
+                    <strong>commitment</strong>
+                </h1>
+                <p class="profile-hero-sub">
+                    Build your personal profile in three steps and record your pledge to SDG 13. Every voice — and every action — matters.
+                </p>
+            </div>
+        </section>
+
+        <!-- ── PROFILE BUILDER ── -->
+        <section class="profile-body">
+
+            <!-- Action buttons -->
+            <div class="profile-controls" role="group" aria-label="Profile actions">
+                <button class="btn btn-solid"    onclick="startProfile()">Start / Continue</button>
+                <button class="btn btn-outline"  onclick="resetProfile()">Reset Profile</button>
+                <button class="btn btn-outline"  onclick="toggleRevisit()">Revisit Skipped</button>
+            </div>
+
+            <!-- Progress tracker -->
+            <div class="progress-block" role="region" aria-label="Profile completion progress">
+                <div class="progress-meta">
+                    <span class="progress-label">Profile Completion</span>
+                    <span class="progress-pct" id="progressPct">0%</span>
+                </div>
+                <div class="progress-track"
+                     role="progressbar"
+                     aria-valuenow="0"
+                     aria-valuemin="0"
+                     aria-valuemax="100"
+                     aria-label="Percentage of profile complete">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="step-pills" role="group" aria-label="Step completion indicators">
+                    <button class="step-pill" id="pill1" onclick="revisitStep(1)">01 — Basics</button>
+                    <button class="step-pill" id="pill2" onclick="revisitStep(2)">02 — Climate Views</button>
+                    <button class="step-pill" id="pill3" onclick="revisitStep(3)">03 — My Pledge</button>
+                </div>
+            </div>
+
+            <!-- Status -->
+            <p class="profile-status" id="statusMsg" aria-live="polite">
+                Click "Start / Continue" to build your climate profile step by step.
+            </p>
+
+            <!-- Completion banner -->
+            <div class="completion-banner" id="completionBanner" role="status" aria-live="polite">
+                <p>Profile complete.</p>
+                <small>Your climate commitment has been recorded. Thank you for taking a stand for SDG 13.</small>
+            </div>
+
+            <!-- Revisit panel -->
+            <div class="revisit-panel" id="revisitPanel" role="region" aria-label="Revisit steps">
+                <h2>Go back to a specific step</h2>
+                <div class="revisit-btns">
+                    <button class="btn btn-outline" onclick="revisitStep(1)">Step 1 — Basics</button>
+                    <button class="btn btn-outline" onclick="revisitStep(2)">Step 2 — Climate Views</button>
+                    <button class="btn btn-outline" onclick="revisitStep(3)">Step 3 — Pledge</button>
+                </div>
+            </div>
+
+            <!-- Profile card (built progressively) -->
+            <div class="profile-card" id="profileCard" role="region" aria-label="Your profile">
+
+                <div class="profile-card-head">
+                    <h2>Your Profile Card</h2>
+                    <span class="profile-badge" id="profileBadge">In Progress</span>
+                </div>
+
+                <div class="profile-cols">
+
+                    <!-- Step 1 block — appears after step 1 runs -->
+                    <div class="profile-block" id="block1">
+                        <p class="block-label">01 — Basics</p>
+                        <p class="pf-label">Full Name</p>
+                        <p class="pf-value" id="outName">—</p>
+                        <p class="pf-label">Username</p>
+                        <p class="pf-value" id="outUsername">—</p>
+                        <p class="pf-label">Location</p>
+                        <p class="pf-value" id="outLocation">—</p>
+                    </div>
+
+                    <!-- Step 2 block — appears after step 2 runs -->
+                    <div class="profile-block" id="block2">
+                        <p class="block-label">02 — Climate Views</p>
+                        <p class="pf-label">Biggest Concern</p>
+                        <p class="pf-value" id="outConcern">—</p>
+                        <p class="pf-label">Preferred Action Type</p>
+                        <p class="pf-value" id="outAction">—</p>
+                        <p class="pf-label">Hours Available / Week</p>
+                        <p class="pf-value" id="outHours">—</p>
+                    </div>
+
+                    <!-- Step 3 block — appears after step 3 runs -->
+                    <div class="profile-block" id="block3">
+                        <p class="block-label">03 — My Pledge</p>
+                        <p class="pf-label">Action I Already Take</p>
+                        <p class="pf-value" id="outCurrent">—</p>
+                        <p class="pf-label">My 2025 Climate Goal</p>
+                        <p class="pf-value" id="outGoal">—</p>
+                        <p class="pf-label">One Person I'll Inspire</p>
+                        <p class="pf-value" id="outInspire">—</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- SHARED FOOTER — Student 4 -->
+    <footer>
+        <div class="footer-brand">
+            <span class="footer-logo">Climate Action</span>
+            <p>University of Westminster — SDG 13</p>
+        </div>
+        <div class="footer-links">
+            <a href="pageEditor_ST4.html">Page Editor</a>
+            <a href="validation_ST4.html">Validation</a>
+            <a href="#">Accessibility</a>
+        </div>
+        <div class="footer-meta">
+            <p>Student 4 — Profile Page</p>
+            <p>&copy; 2026 Climate Action Group</p>
+        </div>
+    </footer>
+
+    <!-- ============================================================
+         JAVASCRIPT — Profile builder
+         Collects 9 fields via prompt() across 3 steps.
+         Updates DOM progressively; tracks skips; allows revisit.
+         ============================================================ -->
+    <script>
+
+        /*
+         * Central data store for all 9 profile fields.
+         * null  = not yet collected this session
+         * ""    = user skipped (Cancel or empty submit)
+         * other = user's answer
+         */
+        const profileData = {
+            name:     null,
+            username: null,
+            location: null,
+            concern:  null,
+            action:   null,
+            hours:    null,
+            current:  null,
+            goal:     null,
+            inspire:  null
+        };
+
+        /* Track whether each step has been run */
+        const stepDone = { 1: false, 2: false, 3: false };
+
+        /* ── Wrapper: prompt(), trims result, returns "" on cancel ── */
+        function ask(q) {
+            const v = prompt(q);
+            return (v === null) ? "" : v.trim();
+        }
+
+        /* ── Step 1: Basics (name, username, location) ── */
+        function runStep1() {
+            profileData.name     = ask("Step 1 of 3 — Basics\n\nWhat is your full name?");
+            profileData.username = ask("Step 1 of 3 — Basics\n\nChoose a username (e.g. climate_hero):");
+            profileData.location = ask("Step 1 of 3 — Basics\n\nWhat city or country are you based in?");
+            stepDone[1] = true;
+            revealBlock(1);
+            setField("outName",     profileData.name);
+            setField("outUsername", profileData.username);
+            setField("outLocation", profileData.location);
+        }
+
+        /* ── Step 2: Climate Views (concern, action type, hours) ── */
+        function runStep2() {
+            profileData.concern = ask("Step 2 of 3 — Climate Views\n\nWhat is your biggest climate concern?\n(e.g. rising sea levels, wildfires, food insecurity)");
+            profileData.action  = ask("Step 2 of 3 — Climate Views\n\nHow do you prefer to take action?\n(e.g. changing habits, community work, advocacy)");
+            profileData.hours   = ask("Step 2 of 3 — Climate Views\n\nHow many hours per week can you give to climate action?");
+            stepDone[2] = true;
+            revealBlock(2);
+            setField("outConcern", profileData.concern);
+            setField("outAction",  profileData.action);
+            setField("outHours",   profileData.hours ? profileData.hours + " hrs / week" : "");
+        }
+
+        /* ── Step 3: Pledge (current action, goal, inspire) ── */
+        function runStep3() {
+            profileData.current = ask("Step 3 of 3 — My Pledge\n\nName one climate-positive action you already take:\n(e.g. cycling, reducing meat, recycling)");
+            profileData.goal    = ask("Step 3 of 3 — My Pledge\n\nWhat is your personal climate goal for 2025?");
+            profileData.inspire = ask("Step 3 of 3 — My Pledge\n\nName one person you will inspire to take climate action:");
+            stepDone[3] = true;
+            revealBlock(3);
+            setField("outCurrent", profileData.current);
+            setField("outGoal",    profileData.goal);
+            setField("outInspire", profileData.inspire);
+        }
+
+        /* ── Reveal a profile block card in the DOM ── */
+        function revealBlock(n) {
+            document.getElementById("block" + n).classList.add("revealed");
+            document.getElementById("profileCard").classList.add("visible");
+        }
+
+        /* ── Update a single output field element ── */
+        function setField(id, val) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            if (!val) {
+                el.textContent = "Not provided";
+                el.classList.add("skipped");
+            } else {
+                el.textContent = val;
+                el.classList.remove("skipped");
+            }
+        }
+
+        /* ── Recalculate and render progress bar + pills + status ── */
+        function updateProgress() {
+            const done = [1,2,3].filter(s => stepDone[s]).length;
+            const pct  = Math.round((done / 3) * 100);
+
+            document.getElementById("progressFill").style.width = pct + "%";
+            document.getElementById("progressPct").textContent  = pct + "%";
+            const track = document.querySelector(".progress-track");
+            if (track) track.setAttribute("aria-valuenow", pct);
+
+            [1,2,3].forEach(s => {
+                const p = document.getElementById("pill" + s);
+                p.classList.remove("active","done");
+                if (stepDone[s]) p.classList.add("done");
+            });
+
+            const msg = document.getElementById("statusMsg");
+            if (pct === 100) {
+                msg.textContent = "All three steps complete — your climate profile is ready.";
+                msg.className = "profile-status done";
+                document.getElementById("completionBanner").classList.add("show");
+                document.getElementById("profileBadge").textContent = "Complete ✓";
+            } else if (done > 0) {
+                msg.textContent = done + " of 3 steps done — " + pct + "% complete. Click Start / Continue for the next step.";
+                msg.className = "profile-status good";
+            }
+        }
+
+        /* ── Main entry: runs the next incomplete step in order ── */
+        function startProfile() {
+            if (!stepDone[1]) {
+                activatePill(1);
+                runStep1();
+            } else if (!stepDone[2]) {
+                activatePill(2);
+                runStep2();
+            } else if (!stepDone[3]) {
+                activatePill(3);
+                runStep3();
+            } else {
+                alert("Your profile is already complete!\n\nUse \u201cRevisit Skipped\u201d to fill in any empty fields.");
+                return;
+            }
+            updateProgress();
+        }
+
+        /* ── Revisit a specific step ── */
+        function revisitStep(n) {
+            if (n > 1 && !stepDone[1]) {
+                alert("Please complete Step 1 first.");
+                return;
+            }
+            activatePill(n);
+            if (n === 1) runStep1();
+            else if (n === 2) runStep2();
+            else runStep3();
+            updateProgress();
+            document.getElementById("revisitPanel").classList.remove("show");
+        }
+
+        /* ── Toggle the revisit drawer ── */
+        function toggleRevisit() {
+            if (!stepDone[1] && !stepDone[2] && !stepDone[3]) {
+                alert("Start your profile first, then revisit any step here.");
+                return;
+            }
+            document.getElementById("revisitPanel").classList.toggle("show");
+        }
+
+        /* ── Set one pill as active ── */
+        function activatePill(n) {
+            [1,2,3].forEach(s => document.getElementById("pill" + s).classList.remove("active"));
+            document.getElementById("pill" + n).classList.add("active");
+        }
+
+        /* ── Full reset ── */
+        function resetProfile() {
+            if (!confirm("Reset your profile? All entered information will be cleared.")) return;
+
+            Object.keys(profileData).forEach(k => profileData[k] = null);
+            Object.keys(stepDone).forEach(k  => stepDone[k]  = false);
+
+            ["outName","outUsername","outLocation",
+             "outConcern","outAction","outHours",
+             "outCurrent","outGoal","outInspire"].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) { el.textContent = "—"; el.classList.remove("skipped"); }
+            });
+
+            [1,2,3].forEach(n => {
+                document.getElementById("block" + n).classList.remove("revealed");
+                document.getElementById("pill"  + n).classList.remove("active","done");
+            });
+
+            document.getElementById("profileCard").classList.remove("visible");
+            document.getElementById("completionBanner").classList.remove("show");
+            document.getElementById("revisitPanel").classList.remove("show");
+            document.getElementById("progressFill").style.width = "0%";
+            document.getElementById("progressPct").textContent  = "0%";
+            document.getElementById("profileBadge").textContent = "In Progress";
+
+            const msg = document.getElementById("statusMsg");
+            msg.textContent = "Profile reset. Click \u201cStart / Continue\u201d to begin again.";
+            msg.className = "profile-status";
+        }
+
+        /* ── Fade-out page transitions (matches index.html pattern) ── */
+        document.querySelectorAll("a[href]").forEach(link => {
+            const href = link.getAttribute("href");
+            if (!href || href.startsWith("#") || href.startsWith("http")) return;
+            link.addEventListener("click", e => {
+                e.preventDefault();
+                document.body.classList.add("fade-out");
+                setTimeout(() => { window.location.href = href; }, 350);
+            });
+        });
+
+    </script>
+
+</body>
+</html>

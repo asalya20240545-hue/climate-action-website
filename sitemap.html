@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sitemap — Climate Action</title>
+    <link rel="stylesheet" href="CWK/style.css">
+
+    <!-- ============================================================
+         SITEMAP PAGE — Embedded CSS (page-specific only)
+         All rules commented, no conflicts with style.css
+         ============================================================ -->
+    <style>
+
+        /* 1. Dark hero — same radial-gradient pattern as index.html */
+        .sitemap-hero {
+            background:
+                radial-gradient(ellipse 60% 80% at 100% 100%, rgba(46,107,71,0.4) 0%, transparent 55%),
+                linear-gradient(160deg, #0e1c14 0%, #1b3a28 70%, #0a1a0e 100%);
+            padding: 120px 52px 72px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 2. Editorial grid texture repeated from global hero pattern */
+        .sitemap-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(184,217,196,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(184,217,196,0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+        }
+
+        /* 3. Decorative watermark numeral — mirrors index.html deco-num */
+        .sitemap-hero-deco {
+            position: absolute;
+            right: -1vw;
+            bottom: -2vh;
+            font-family: var(--ff-display);
+            font-size: clamp(12rem, 20vw, 24rem);
+            font-weight: 700;
+            color: rgba(184,217,196,0.04);
+            line-height: 1;
+            pointer-events: none;
+            user-select: none;
+            letter-spacing: -0.05em;
+        }
+
+        /* 4. Hero text content layer */
+        .sitemap-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+        }
+
+        .sitemap-hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.68rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--sage);
+            font-weight: 500;
+            margin-bottom: 28px;
+        }
+
+        .sitemap-hero-tag::before {
+            content: '';
+            width: 32px; height: 1px;
+            background: var(--sage);
+            display: block;
+        }
+
+        .sitemap-hero h1 {
+            color: var(--warm-white);
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            margin-bottom: 18px;
+            line-height: 1.05;
+        }
+
+        .sitemap-hero h1 strong { font-weight: 700; display: block; }
+
+        .sitemap-hero-sub {
+            font-size: 0.95rem;
+            color: rgba(247,243,236,0.5);
+            max-width: 520px;
+            line-height: 1.75;
+            font-weight: 300;
+        }
+
+        /* 5. Main content wrapper — matches mission section padding */
+        .sitemap-body {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 80px 52px;
+        }
+
+        /* 6. SVG wrapper — fully responsive */
+        .sitemap-svg-wrap {
+            width: 100%;
+            overflow: visible;
+        }
+
+        .sitemap-svg-wrap svg {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* 7. Node hover and focus effects (SVG <a> tags) */
+        .sm-node rect,
+        .sm-node ellipse {
+            transition: fill 0.2s ease, stroke 0.2s ease;
+            cursor: pointer;
+        }
+
+        .sm-node:hover rect,
+        .sm-node:focus rect,
+        .sm-node:hover ellipse,
+        .sm-node:focus ellipse {
+            fill: var(--sage, #5a9e72) !important;
+            stroke: rgba(184,217,196,0.8) !important;
+        }
+
+        .sm-node:hover text,
+        .sm-node:focus text {
+            fill: #0e1c14 !important;
+            font-weight: 700;
+        }
+
+        .sm-node text { transition: fill 0.2s ease; pointer-events: none; }
+
+        /* Keyboard focus ring */
+        .sm-node:focus { outline: none; }
+        .sm-node:focus rect,
+        .sm-node:focus ellipse { stroke-width: 2.5px !important; }
+
+        /* 8. Legend row below SVG */
+        .sitemap-legend {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid var(--parchment);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #8a9e8f;
+            font-weight: 500;
+        }
+
+        .legend-dot {
+            width: 10px; height: 10px;
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        /* 9. Responsive: shrink padding on small screens */
+        @media (max-width: 900px) {
+            .sitemap-hero { padding: 100px 20px 60px; }
+            .sitemap-body { padding: 60px 20px; }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- SHARED HEADER — identical structure to index.html / team.html -->
+    <header>
+        <nav>
+            <a href="home.html" class="nav-logo">Climate Action</a>
+            <ul class="nav-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="ais.html">Action Simulator</a></li>
+                <li><a href="feedback.html">Feedback</a></li>
+                <li><a href="team.html">Team</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="sitemap.html" class="active">Sitemap</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- ── HERO ── -->
+        <section class="sitemap-hero">
+            <div class="sitemap-hero-deco" aria-hidden="true">S</div>
+            <div class="sitemap-hero-content">
+                <span class="sitemap-hero-tag">SDG 13 — Climate Action</span>
+                <h1>
+                    Site
+                    <strong>structure</strong>
+                </h1>
+                <p class="sitemap-hero-sub">
+                    A visual overview of every page on Climate Action. Click any node to navigate there directly.
+                </p>
+            </div>
+        </section>
+
+        <!-- ── SITEMAP SVG ── -->
+        <section class="sitemap-body">
+
+            <div class="sitemap-svg-wrap"
+                 role="img"
+                 aria-label="Interactive sitemap showing all pages of Climate Action and their relationships">
+
+                <!--
+                    SVG SITEMAP  —  viewBox 0 0 1000 680
+                    ============================================================
+                    Hierarchy:
+                      Splash Screen  (entry)
+                        └── Home / Index  (hub)
+                            ├── Gallery
+                            ├── Action Impact Simulator
+                            ├── Feedback
+                            ├── Team
+                            ├── Profile
+                            ├── Sitemap  ← current
+                            └── Content Pages
+                                ├── Wildfires & Climate  (ST1)
+                                ├── Melting Ice Caps     (ST2)
+                                ├── Extreme Flooding     (ST3)
+                                └── Droughts & Food      (ST4)
+                    Footer links (shared):
+                        Page Editors ST1–ST4  +  Validation ST1–ST4
+                    ============================================================
+                    All node fills use hex equivalents of CSS vars so the SVG
+                    is self-contained and renders without style.css.
+                    Hover colour swap is handled by the CSS rules above.
+                    ============================================================
+                -->
+                <svg viewBox="0 0 1000 680"
+                     xmlns="http://www.w3.org/2000/svg"
+                     xmlns:xlink="http://www.w3.org/1999/xlink"
+                     aria-label="Climate Action sitemap diagram">
+
+                    <!-- ── BACKGROUND ── -->
+                    <rect width="1000" height="680" fill="#0e1c14" rx="8"/>
+
+                    <!-- subtle dot grid -->
+                    <pattern id="grid" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+                        <circle cx="0.5" cy="0.5" r="0.8" fill="#1b3a28"/>
+                    </pattern>
+                    <rect width="1000" height="680" fill="url(#grid)" rx="8" opacity="0.7"/>
+
+                    <!-- ── ARROWHEAD MARKERS ── -->
+                    <defs>
+                        <marker id="arr" markerWidth="7" markerHeight="7" refX="5" refY="2.5" orient="auto">
+                            <path d="M0,0 L0,5 L7,2.5 z" fill="#2e6b47"/>
+                        </marker>
+                        <marker id="arr-gold" markerWidth="7" markerHeight="7" refX="5" refY="2.5" orient="auto">
+                            <path d="M0,0 L0,5 L7,2.5 z" fill="#a07830"/>
+                        </marker>
+                    </defs>
+
+                    <!-- ── SECTION LABELS ── -->
+                    <text x="500" y="36" text-anchor="middle"
+                          font-family="Georgia, serif" font-size="9" fill="#2e6b47"
+                          letter-spacing="3" font-weight="400">ENTRY POINT</text>
+
+                    <text x="500" y="200" text-anchor="middle"
+                          font-family="Georgia, serif" font-size="9" fill="#2e6b47"
+                          letter-spacing="3">MAIN NAVIGATION</text>
+
+                    <text x="500" y="355" text-anchor="middle"
+                          font-family="Georgia, serif" font-size="9" fill="#2e6b47"
+                          letter-spacing="3">CONTENT PAGES</text>
+
+                    <text x="500" y="545" text-anchor="middle"
+                          font-family="Georgia, serif" font-size="9" fill="#a07830"
+                          letter-spacing="3">PAGE EDITORS &amp; VALIDATION</text>
+
+                    <!-- horizontal dividers -->
+                    <line x1="60"  y1="212" x2="400" y2="212" stroke="#1b3a28" stroke-width="1"/>
+                    <line x1="600" y1="212" x2="940" y2="212" stroke="#1b3a28" stroke-width="1"/>
+                    <line x1="60"  y1="366" x2="380" y2="366" stroke="#1b3a28" stroke-width="1"/>
+                    <line x1="620" y1="366" x2="940" y2="366" stroke="#1b3a28" stroke-width="1"/>
+                    <line x1="60"  y1="557" x2="380" y2="557" stroke="#1b3a28" stroke-width="1"/>
+                    <line x1="620" y1="557" x2="940" y2="557" stroke="#1b3a28" stroke-width="1"/>
+
+
+                    <!-- ==================================================
+                         CONNECTOR LINES  (drawn behind all nodes)
+                         ================================================== -->
+
+                    <!-- Splash → Home -->
+                    <line x1="500" y1="80"  x2="500" y2="128" stroke="#2e6b47" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arr)"/>
+
+                    <!-- Home → main pages (fan) -->
+                    <line x1="430" y1="170" x2="96"  y2="238" stroke="#1b3a28" stroke-width="1.2" marker-end="url(#arr)"/>
+                    <line x1="458" y1="174" x2="228" y2="238" stroke="#1b3a28" stroke-width="1.2" marker-end="url(#arr)"/>
+                    <line x1="484" y1="176" x2="390" y2="238" stroke="#1b3a28" stroke-width="1.2" marker-end="url(#arr)"/>
+                    <line x1="516" y1="176" x2="558" y2="238" stroke="#1b3a28" stroke-width="1.2" marker-end="url(#arr)"/>
+                    <line x1="542" y1="174" x2="724" y2="238" stroke="#1b3a28" stroke-width="1.2" marker-end="url(#arr)"/>
+                    <line x1="568" y1="170" x2="892" y2="238" stroke="#1b3a28" stroke-width="1.2" marker-end="url(#arr)"/>
+
+                    <!-- Home → content pages (dashed) -->
+                    <line x1="500" y1="178" x2="500" y2="368" stroke="#1b3a28" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arr)"/>
+
+                    <!-- Content pages → individual tiles -->
+                    <line x1="440" y1="393" x2="152" y2="435" stroke="#2e6b47" stroke-width="1.2" marker-end="url(#arr)"/>
+                    <line x1="472" y1="396" x2="352" y2="435" stroke="#2e6b47" stroke-width="1.2" marker-end="url(#arr)"/>
+                    <line x1="528" y1="396" x2="648" y2="435" stroke="#2e6b47" stroke-width="1.2" marker-end="url(#arr)"/>
+                    <line x1="560" y1="393" x2="848" y2="435" stroke="#2e6b47" stroke-width="1.2" marker-end="url(#arr)"/>
+
+                    <!-- Content tiles → page editors (gold dashed) -->
+                    <line x1="152" y1="470" x2="120" y2="568" stroke="#a07830" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#arr-gold)"/>
+                    <line x1="352" y1="470" x2="348" y2="568" stroke="#a07830" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#arr-gold)"/>
+                    <line x1="648" y1="470" x2="652" y2="568" stroke="#a07830" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#arr-gold)"/>
+                    <line x1="848" y1="470" x2="880" y2="568" stroke="#a07830" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#arr-gold)"/>
+
+
+                    <!-- ==================================================
+                         NODES
+                         ================================================== -->
+
+                    <!-- ── Splash Screen (entry, warm sage fill) ── -->
+                    <a xlink:href="splash.html" class="sm-node" tabindex="0" aria-label="Splash Screen – entry point" role="link">
+                        <title>Splash Screen</title>
+                        <rect x="380" y="44" width="240" height="44" rx="4"
+                              fill="#2e6b47" stroke="#5a9e72" stroke-width="1.2"/>
+                        <text x="500" y="71" text-anchor="middle"
+                              font-family="Georgia, serif" font-size="13" font-weight="700" fill="#f0ebe0">
+                            Splash Screen
+                        </text>
+                    </a>
+
+                    <!-- ── Home / Index (hub, lighter) ── -->
+                    <a xlink:href="index.html" class="sm-node" tabindex="0" aria-label="Home Page – site hub" role="link">
+                        <title>Home Page</title>
+                        <rect x="380" y="132" width="240" height="44" rx="4"
+                              fill="#3a7a54" stroke="#5a9e72" stroke-width="1.2"/>
+                        <text x="500" y="159" text-anchor="middle"
+                              font-family="Georgia, serif" font-size="13" font-weight="700" fill="#f0ebe0">
+                            Home / Index
+                        </text>
+                    </a>
+
+                    <!-- ── Gallery ── -->
+                    <a xlink:href="gallery.html" class="sm-node" tabindex="0" aria-label="Gallery page" role="link">
+                        <title>Gallery</title>
+                        <rect x="42" y="240" width="108" height="38" rx="3"
+                              fill="#1b3a28" stroke="#2e6b47" stroke-width="1.2"/>
+                        <text x="96" y="264" text-anchor="middle"
+                              font-family="Georgia, serif" font-size="11" fill="#b8d9c4">
+                            Gallery
+                        </text>
+                    </a>
+
+                    <!-- ── Action Impact Simulator ── -->
+                    <a xlink:href="ais.html" class="sm-node" tabindex="0" aria-label="Action Impact Simulator page" role="link">
+                        <title>Action Impact Simulator</title>
+                        <rect x="172" y="240" width="112" height="38" rx="3"
+                              fill="#1b3a28" stroke="#2e6b47" stroke-width="1.2"/>
+                        <text x="228" y="257" text-anchor="middle"
+                              font-family="Georgia, serif" font-size="10" fill="#b8d9c4">
+                            Action Impact
+                        </text>
+                        <text x="228" y="271" text-anchor="middle"
+                              font-family="Georgia, serif" font-size="10" fill="#b8d9c4">
+                            Simulator
+                        </text>
+                    </a>
+
+                    <!-- ── Feedback ── -->
+                    <a xlink:href="feedback.html" class="sm-node" tabindex="0" aria-label="Feedback page" role="link">
+                        <title>Feedback</title>
+                        <rect x="336" y="240" width="108" height="38" rx="3"
+                              fill="#1b3a28" stroke="#2e6b47" stroke-width="1.2"/>
+                        <text x="390" y="264" text-anchor="middle"
+                              font-family="Georgia, serif" font-size="11" fill="#b8d9c4">
+                            Feedback
+                        </text>
+                    </a>
+
+                    <!-- ── Team ── -->
+                    <a xlink:href="team.html" class="sm-node" tabindex="0" aria-label="Team page" role="link">
+                        <title>Team</title>
+                        <rect x="504" y="240" width="108" height="38" rx="3"
+                              fill="#1b3a28" stroke="#2e6b47" stroke-width="1.2"/>
+                        <text x="558" y="264" text-anchor="middle"
+                              font-family="Georgia, serif" font-size="11" fill="#b8d9c4">
+                            Team
+                        </text>
+                    </a>
+
+                    <!-- ── Profile ── -->
+                    <a xlink:href="profile.html" class="sm-node" tabindex="0" aria-label="Profile page" role="link">
+                        <title>Profile</title>
+                        <rect x="670" y="240" width="108" height="38" rx="3"
+                              fill="#1b3a28" stroke="#2e6b47" stroke-width="1.2"/>
+                        <text x="724" y="264" text-anchor="middle"
+                              font-family="Georgia, serif" font-size="11" fill="#b8d9c4">
+                            Profile
+                        </text>
+                    </a>
+
+                    <!-- ── Sitemap (current page — highlighted border) ── -->
+                    <a xlink:href="sitemap.html" class="sm-node" tabindex="0" aria-label="Sitemap – current page" role="link">
+                        <title>Sitemap (current page)</title>
+                        <rect x="838" y="240" width="108" height="38" rx="3"
+                              fill="#102218" stroke="#5a9e72" stroke-width="2"/>
+                        <text x="892" y="256" text-anchor="middle"
+                              font-family="Georgia, serif" font-size="11" fill="#5a9e72">
+                            Sitemap
+                        </text>
+                        <text x="892" y="270" text-anchor="middle"
+                              font-family="Georgia, serif" font-size="8" fill="#2e6b47">
+                            current page
+                        </text>
+                    </a>
+
+                    <!-- ── Content Pages Group ── -->
+                    <rect x="370" y="370" width="260" height="36" rx="3"
+                          fill="#102218" stroke="#2e6b47" stroke-width="1" stroke-dasharray="5,3"/>
+                    <text x="500" y="393" text-anchor="middle"
+                          font-family="Georgia, serif" font-size="11" fill="#5a9e72" font-weight="400">
+                        Content Pages (×4)
+                    </text>
+
+                    <!-- ── Content ST1: Wildfires ── -->
+                    <a xlink:href="content_ST1.html" class="sm-node" tabindex="0" aria-label="Content Page Student 1 – Wildfires and Climate" role="link">
+                        <title>Wildfires &amp; Climate – Student 1</title>
+                        <rect x="86" y="437" width="132" height="40" rx="3"
+                              fill="#1b3a28" stroke="#2e6b47" stroke-width="1.2"/>
+                        <text x="152" y="453" text-anchor="middle"
+                              font-family="Georgia, serif" font-size="10" fill="#b8d9c4">
+                            Wildfires &amp;
+                        </text>
+                        <text x="152" y="466" text-anchor="middle"
+                              font-family="Georgia, serif" font-size="10" fill="#b8d9c4">
+                            Climate (ST1)
+                        </text>
+                    </a>
+
+                    <!-- ── Content ST2: Melting Ice ── -->
+                    <a xlink:href="content_ST2.html" class="sm-node" tabindex="0" aria-label="Content Page Student 2 – Melting Ice Caps" role="link">
+                        <title>Melting Ice Caps – Student 2</title>
+                        <rect x="286" y="437" width="132" height="40" rx="3"
+                              fill="#1b3a28" stroke="#2e6b47" stroke-width="1.2"/>
+                        <text x="352" y="453" text-anchor="middle"
+                              font-family="Georgia, serif" font-size="10" fill="#b8d9c4">
+                            Melting Ice
+                        </text>
+                        <text x="352" y="466" text-anchor="middle"
+                              font-family="Georgia, serif" font-size="10" fill="#b8d9c4">
+                            Caps (ST2)
+                        </text>
+                    </a>
+
+                    <!-- ── Content ST3: Extreme Flooding ── -->
+                    <a xlink:href="content_ST3.html" class="sm-node" tabindex="0" aria-label="Content Page Student 3 – Extreme Flooding" role="link">
+                        <title>Extreme Flooding – Student 3</title>
+                        <rect x="582" y="437" width="132" height="40" rx="3"
+                              fill="#1b3a28" stroke="#2e6b47" stroke-width="1.2"/>
+                        <text x="648" y="453" text-anchor="middle"
+                              font-family="Georgia, serif" font-size="10" fill="#b8d9c4">
+                            Extreme
+                        </text>
+                        <text x="648" y="466" text-anchor="middle"
+                              font-family="Georgia, serif" font-size="10" fill="#b8d9c4">
+                            Flooding (ST3)
+                        </text>
+                    </a>
+
+                    <!-- ── Content ST4: Droughts ── -->
+                    <a xlink:href="content_ST4.html" class="sm-node" tabindex="0" aria-label="Content Page Student 4 – Droughts and Food" role="link">
+                        <title>Droughts &amp; Food – Student 4</title>
+                        <rect x="782" y="437" width="132" height="40" rx="3"
+                              fill="#1b3a28" stroke="#2e6b47" stroke-width="1.2"/>
+                        <text x="848" y="453" text-anchor="middle"
+                              font-family="Georgia, serif" font-size="10" fill="#b8d9c4">
+                            Droughts &amp;
+                        </text>
+                        <text x="848" y="466" text-anchor="middle"
+                              font-family="Georgia, serif" font-size="10" fill="#b8d9c4">
+                            Food (ST4)
+                        </text>
+                    </a>
+
+                    <!-- ── Page Editor ST1 ── -->
+                    <a xlink:href="pageEditor_ST1.html" class="sm-node" tabindex="0" aria-label="Page Editor Student 1" role="link">
+                        <title>Page Editor + Validation – Student 1</title>
+                        <rect x="42" y="570" width="156" height="36" rx="3"
+                              fill="#1a1408" stroke="#a07830" stroke-width="1"/>
+                        <text x="120" y="585" text-anchor="middle"
+                              font-family="Georgia, serif" font-size="9.5" fill="#c8a050">
+                            Page Editor ST1
+                        </text>
+                        <text x="120" y="598" text-anchor="middle"
+                              font-family="Georgia, serif" font-size="8.5" fill="#6a5020">
+                            + Validation ST1
+                        </text>
+                    </a>
+
+                    <!-- ── Page Editor ST2 ── -->
+                    <a xlink:href="pageEditor_ST2.html" class="sm-node" tabindex="0" aria-label="Page Editor Student 2" role="link">
+                        <title>Page Editor + Validation – Student 2</title>
+                        <rect x="270" y="570" width="156" height="36" rx="3"
+                              fill="#1a1408" stroke="#a07830" stroke-width="1"/>
+                        <text x="348" y="585" text-anchor="middle"
+                              font-family="Georgia, serif" font-size="9.5" fill="#c8a050">
+                            Page Editor ST2
+                        </text>
+                        <text x="348" y="598" text-anchor="middle"
+                              font-family="Georgia, serif" font-size="8.5" fill="#6a5020">
+                            + Validation ST2
+                        </text>
+                    </a>
+
+                    <!-- ── Page Editor ST3 ── -->
+                    <a xlink:href="pageEditor_ST3.html" class="sm-node" tabindex="0" aria-label="Page Editor Student 3" role="link">
+                        <title>Page Editor + Validation – Student 3</title>
+                        <rect x="574" y="570" width="156" height="36" rx="3"
+                              fill="#1a1408" stroke="#a07830" stroke-width="1"/>
+                        <text x="652" y="585" text-anchor="middle"
+                              font-family="Georgia, serif" font-size="9.5" fill="#c8a050">
+                            Page Editor ST3
+                        </text>
+                        <text x="652" y="598" text-anchor="middle"
+                              font-family="Georgia, serif" font-size="8.5" fill="#6a5020">
+                            + Validation ST3
+                        </text>
+                    </a>
+
+                    <!-- ── Page Editor ST4 (current student) ── -->
+                    <a xlink:href="pageEditor_ST4.html" class="sm-node" tabindex="0" aria-label="Page Editor Student 4" role="link">
+                        <title>Page Editor + Validation – Student 4</title>
+                        <rect x="802" y="570" width="156" height="36" rx="3"
+                              fill="#1a1408" stroke="#c8a050" stroke-width="1.5"/>
+                        <text x="880" y="585" text-anchor="middle"
+                              font-family="Georgia, serif" font-size="9.5" fill="#c8a050">
+                            Page Editor ST4
+                        </text>
+                        <text x="880" y="598" text-anchor="middle"
+                              font-family="Georgia, serif" font-size="8.5" fill="#6a5020">
+                            + Validation ST4
+                        </text>
+                    </a>
+
+                </svg>
+
+            </div><!-- end sitemap-svg-wrap -->
+
+            <!-- Legend -->
+            <div class="sitemap-legend" role="note" aria-label="Sitemap colour key">
+                <div class="legend-item">
+                    <span class="legend-dot" style="background:#3a7a54"></span>
+                    Entry / Hub
+                </div>
+                <div class="legend-item">
+                    <span class="legend-dot" style="background:#2e6b47"></span>
+                    Main navigation pages
+                </div>
+                <div class="legend-item">
+                    <span class="legend-dot" style="background:#1b3a28"></span>
+                    Content &amp; secondary pages
+                </div>
+                <div class="legend-item">
+                    <span class="legend-dot" style="background:#a07830"></span>
+                    Page editors &amp; validation
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- SHARED FOOTER — Student 4 -->
+    <footer>
+        <div class="footer-brand">
+            <span class="footer-logo">Climate Action</span>
+            <p>University of Westminster — SDG 13</p>
+        </div>
+        <div class="footer-links">
+            <a href="pageEditor_ST4.html">Page Editor</a>
+            <a href="validation_ST4.html">Validation</a>
+            <a href="#">Accessibility</a>
+        </div>
+        <div class="footer-meta">
+            <p>Student 4 — Sitemap</p>
+            <p>&copy; 2026 Climate Action Group</p>
+        </div>
+    </footer>
+
+    <!-- ============================================================
+         JAVASCRIPT — Keyboard activation for SVG nodes
+         SVG <a> elements get tabindex="0" in markup.
+         Enter / Space triggers navigation matching anchor href.
+         Also applies the site-wide fade-out transition.
+         ============================================================ -->
+    <script>
+
+        /* Keyboard: Enter / Space activates SVG anchor nodes */
+        document.querySelectorAll(".sm-node").forEach(function(node) {
+            node.addEventListener("keydown", function(e) {
+                if (e.key === "Enter" || e.key === " " || e.keyCode === 13 || e.keyCode === 32) {
+                    e.preventDefault();
+                    const anchor = node.closest("a") || node.querySelector("a");
+                    if (!anchor) return;
+                    const href = anchor.getAttribute("href") || anchor.getAttributeNS("http://www.w3.org/1999/xlink", "href");
+                    if (href) {
+                        document.body.classList.add("fade-out");
+                        setTimeout(function() { window.location.href = href; }, 350);
+                    }
+                }
+            });
+        });
+
+        /* Mouse click: also apply fade-out for smooth transitions */
+        document.querySelectorAll(".sm-node").forEach(function(node) {
+            node.addEventListener("click", function(e) {
+                const anchor = node.closest("a") || node.querySelector("a");
+                if (!anchor) return;
+                const href = anchor.getAttribute("href") || anchor.getAttributeNS("http://www.w3.org/1999/xlink", "href");
+                if (href && !href.startsWith("http")) {
+                    e.preventDefault();
+                    document.body.classList.add("fade-out");
+                    setTimeout(function() { window.location.href = href; }, 350);
+                }
+            });
+        });
+
+    </script>
+
+</body>
+</html>

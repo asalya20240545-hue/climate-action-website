@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team — Climate Action</title>
+    <link rel="stylesheet" href="CWK/style.css">
+
+    
+    <style>
+
+        /* 1. Dark hero banner — matches global hero pattern */
+        .team-hero {
+            background:
+                radial-gradient(ellipse 60% 80% at 100% 100%, rgba(46,107,71,0.4) 0%, transparent 55%),
+                linear-gradient(160deg, #0e1c14 0%, #1b3a28 70%, #0a1a0e 100%);
+            padding: 120px 52px 72px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 2. Editorial grid texture — consistent with other hero sections */
+        .team-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(184,217,196,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(184,217,196,0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+        }
+
+        /* 3. Large decorative watermark letter */
+        .team-hero-deco {
+            position: absolute;
+            right: -1vw;
+            bottom: -2vh;
+            font-family: var(--ff-display);
+            font-size: clamp(12rem, 20vw, 24rem);
+            font-weight: 700;
+            color: rgba(184,217,196,0.04);
+            line-height: 1;
+            pointer-events: none;
+            user-select: none;
+            letter-spacing: -0.05em;
+        }
+
+        /* 4. Hero text content — sits above pseudo-element layers */
+        .team-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+        }
+
+        .team-hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.68rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--sage);
+            font-weight: 500;
+            margin-bottom: 28px;
+        }
+
+        .team-hero-tag::before {
+            content: '';
+            width: 32px;
+            height: 1px;
+            background: var(--sage);
+            display: block;
+        }
+
+        .team-hero h1 {
+            color: var(--warm-white);
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            margin-bottom: 18px;
+            line-height: 1.05;
+        }
+
+        .team-hero h1 strong {
+            font-weight: 700;
+            display: block;
+        }
+
+        .team-hero-sub {
+            font-size: 0.95rem;
+            color: rgba(247,243,236,0.5);
+            max-width: 480px;
+            line-height: 1.75;
+            font-weight: 300;
+        }
+
+        /* 5. Team grid section wrapper */
+        .team-section {
+            padding: 90px 52px;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        /* 6. Four-column grid for team member cards */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 48px;
+        }
+
+        /* 7. Individual team card — relative so overlay can position inside */
+        .team-card {
+            position: relative;
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid var(--parchment);
+            outline: none;
+            transition: transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out);
+        }
+
+        /* 8. Card lift on hover/focus */
+        .team-card:hover,
+        .team-card:focus {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 48px rgba(14,28,20,0.15);
+        }
+
+        /* 9. Thumbnail image — zooms smoothly on hover */
+        .team-card img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s var(--ease-out);
+        }
+
+        .team-card:hover img,
+        .team-card:focus img {
+            transform: scale(1.08);
+        }
+
+        /* 10. Details overlay — hidden by default, revealed on hover/focus */
+        .team-card-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(14, 28, 20, 0.88);
+            color: var(--mist);
+            opacity: 0;
+            padding: 28px 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 10px;
+            transition: opacity 0.4s ease;
+        }
+
+        .team-card:hover .team-card-overlay,
+        .team-card:focus .team-card-overlay {
+            opacity: 1;
+        }
+
+        .team-card-overlay h3 {
+            font-family: var(--ff-display);
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--warm-white);
+            margin-bottom: 4px;
+        }
+
+        .team-card-overlay .role-tag {
+            font-size: 0.68rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--sage);
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .team-card-overlay p {
+            font-size: 0.83rem;
+            color: rgba(184,217,196,0.75);
+            line-height: 1.65;
+            font-weight: 300;
+        }
+
+        .team-card-overlay ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 8px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(184,217,196,0.12);
+        }
+
+        .team-card-overlay ul li {
+            font-size: 0.78rem;
+            color: rgba(184,217,196,0.6);
+            padding-left: 14px;
+            position: relative;
+        }
+
+        .team-card-overlay ul li::before {
+            content: '—';
+            position: absolute;
+            left: 0;
+            color: var(--sage);
+            font-size: 0.7rem;
+        }
+
+        /* 11. Name/role strip below image (always visible) */
+        .team-card-info {
+            background: var(--warm-white);
+            padding: 16px 18px;
+            border-top: 1px solid var(--parchment);
+        }
+
+        .team-card-info h3 {
+            font-family: var(--ff-display);
+            font-size: 1rem;
+            color: var(--forest);
+            margin-bottom: 3px;
+        }
+
+        .team-card-info p {
+            font-size: 0.75rem;
+            color: var(--moss);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        /* 12. Visible focus ring for keyboard accessibility */
+        .team-card:focus {
+            outline: 2px solid var(--sage);
+            outline-offset: 2px;
+        }
+
+        /* 13. Responsive: 2 columns on tablet, 1 on mobile */
+        @media (max-width: 960px) {
+            .team-section { padding: 60px 20px; }
+            .team-hero { padding: 100px 20px 60px; }
+            .team-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 520px) {
+            .team-grid { grid-template-columns: 1fr; }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <a href="home.html" class="nav-logo">Climate Action</a>
+        <ul class="nav-links">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="ais.html">Action Simulator</a></li>
+            <li><a href="feedback.html">Feedback</a></li>
+            <li><a href="team.html" class="active">Team</a></li>
+            <li><a href="profile.html">Profile</a></li>
+            <li><a href="sitemap.html">Sitemap</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+
+<!-- HERO -->
+<section class="team-hero">
+    <div class="team-hero-deco" aria-hidden="true">T</div>
+
+    <div class="team-hero-content">
+        <span class="team-hero-tag">SDG 13 — Climate Action</span>
+
+        <h1>
+            Meet the
+            <strong>team</strong>
+        </h1>
+
+        <p class="team-hero-sub">
+            Four students from the University of Westminster working together to raise awareness about climate change and SDG 13.
+        </p>
+    </div>
+</section>
+
+
+<!-- TEAM SECTION (FIXED) -->
+<section class="team-section">
+
+    <!-- ✅ FIX 1: Proper heading added -->
+    <h2 class="section-label">Our People</h2>
+
+    <div class="team-grid">
+
+        <!-- MEMBER 1 -->
+        <article class="team-card" tabindex="0">
+            <img src="images/student1.jpg.jpeg" alt="Menash Gamalatage, Student 1">
+
+            <div class="team-card-overlay">
+                <!-- ✅ FIX 2: h3 → h2 -->
+                <h3>Menash Gamalatage</h3>
+                <p class="role-tag">Student 1 — Template &amp; Home Page</p>
+                <p>Designed and built the shared HTML template, global CSS, and navigation bar.</p>
+            </div>
+
+            <div class="team-card-info">
+                <h3>Menash Gamalatage</h3>
+                <p>Template &amp; Home Page</p>
+            </div>
+        </article>
+
+
+        <!-- MEMBER 2 -->
+        <article class="team-card" tabindex="0">
+            <img src="images/student2.jpg.jpeg" alt="Adeeb Janees, Student 2">
+
+            <div class="team-card-overlay">
+                <h3>Adeeb Janees</h3>
+                <p class="role-tag">Student 2 — Splash &amp; Simulator</p>
+                <p>Developed the splash screen and Action Impact Simulator.</p>
+            </div>
+
+            <div class="team-card-info">
+                <h3>Adeeb Janees</h3>
+                <p>Splash &amp; Simulator</p>
+            </div>
+        </article>
+
+
+        <!-- MEMBER 3 -->
+        <article class="team-card" tabindex="0">
+            <img src="images/student3.jpg.jpeg" alt="W.A.N Boteju, Student 3">
+
+            <div class="team-card-overlay">
+                <h3>W.A.N Boteju</h3>
+                <p class="role-tag">Student 3 — Feedback &amp; Team</p>
+                <p>Created the feedback form and this team page.</p>
+            </div>
+
+            <div class="team-card-info">
+                <h3>W.A.N Boteju</h3>
+                <p>Feedback &amp; Team</p>
+            </div>
+        </article>
+
+
+        <!-- MEMBER 4 -->
+        <article class="team-card" tabindex="0">
+            <img src="images/student4.jpg.jpeg" alt="Ibrahim Alba, Student 4">
+
+            <div class="team-card-overlay">
+                <h3>Ibrahim Alba</h3>
+                <p class="role-tag">Student 4 — Profile &amp; Sitemap</p>
+                <p>Built the profile system and SVG sitemap.</p>
+            </div>
+
+            <div class="team-card-info">
+                <h3>Ibrahim Alba</h3>
+                <p>Profile &amp; Sitemap</p>
+            </div>
+        </article>
+
+    </div>
+</section>
+
+</main>
+
+
+<footer>
+    <div class="footer-brand">
+        <span class="footer-logo">Climate Action</span>
+        <p>University of Westminster — SDG 13</p>
+    </div>
+
+    <div class="footer-links">
+        <a href="pageEditor_ST3.html">Page Editor</a>
+        <a href="validation_ST3.html">Validation</a>
+        <a href="#">Accessibility</a>
+    </div>
+
+    <div class="footer-meta">
+        <p>Student 3 — Team Page</p>
+        <p>&copy; 2026 Climate Action Group</p>
+    </div>
+</footer>
+
+
+<script>
+document.querySelectorAll('a[href]').forEach(link => {
+    const href = link.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('http')) return;
+
+    link.addEventListener('click', e => {
+        e.preventDefault();
+        document.body.classList.add('fade-out');
+        setTimeout(() => { window.location.href = href; }, 350);
+    });
+});
+</script>
+
+</body>
+</html>

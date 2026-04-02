@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback — Climate Action</title>
+    <link rel="stylesheet" href="CWK/style.css">
+
+    
+    <style>
+
+        
+        .feedback-hero {
+            background:
+                radial-gradient(ellipse 60% 80% at 0% 100%, rgba(46,107,71,0.45) 0%, transparent 55%),
+                linear-gradient(160deg, #0e1c14 0%, #1b3a28 70%, #0a1a0e 100%);
+            padding: 120px 52px 72px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        
+        .feedback-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(184,217,196,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(184,217,196,0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+        }
+
+        
+        .feedback-hero-deco {
+            position: absolute;
+            right: -1vw;
+            bottom: -2vh;
+            font-family: var(--ff-display);
+            font-size: clamp(12rem, 20vw, 24rem);
+            font-weight: 700;
+            color: rgba(184,217,196,0.04);
+            line-height: 1;
+            pointer-events: none;
+            user-select: none;
+            letter-spacing: -0.05em;
+        }
+
+        
+        .feedback-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+        }
+
+        .feedback-hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.68rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--sage);
+            font-weight: 500;
+            margin-bottom: 28px;
+        }
+
+        .feedback-hero-tag::before {
+            content: '';
+            width: 32px; height: 1px;
+            background: var(--sage);
+            display: block;
+        }
+
+        .feedback-hero h1 {
+            color: var(--warm-white);
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            margin-bottom: 18px;
+            line-height: 1.05;
+        }
+
+        .feedback-hero h1 strong {
+            font-weight: 700;
+            display: block;
+        }
+
+        .feedback-hero-sub {
+            font-size: 0.95rem;
+            color: rgba(247,243,236,0.5);
+            max-width: 480px;
+            line-height: 1.75;
+            font-weight: 300;
+        }
+
+        
+        .programmes {
+            background: var(--forest);
+            padding: 80px 52px;
+        }
+
+        .programmes h2 {
+            color: var(--warm-white);
+            margin-bottom: 10px;
+        }
+
+        .programmes-controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+
+        .programmes-controls p {
+            font-size: 0.72rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(184,217,196,0.5);
+            font-weight: 500;
+        }
+
+        /* Dropdown sort control */
+        .sort-select {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(184,217,196,0.2);
+            color: var(--mist);
+            padding: 8px 16px;
+            border-radius: 3px;
+            font-family: var(--ff-body);
+            font-size: 0.8rem;
+            cursor: pointer;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .sort-select:focus { border-color: var(--sage); }
+
+        
+        .cards-scroll {
+            max-height: 380px;
+            overflow-y: auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            padding-right: 8px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--moss) transparent;
+        }
+
+        .cards-scroll::-webkit-scrollbar { width: 4px; }
+        .cards-scroll::-webkit-scrollbar-track { background: transparent; }
+        .cards-scroll::-webkit-scrollbar-thumb { background: var(--moss); border-radius: 2px; }
+
+        
+        .prog-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(184,217,196,0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+
+        .prog-card:hover { border-color: rgba(90,158,114,0.4); }
+
+        .prog-card img {
+            width: 100%;
+            height: 130px;
+            object-fit: cover;
+            display: block;
+            filter: brightness(0.8) saturate(0.8);
+        }
+
+        .prog-card-body { padding: 16px; }
+
+        .prog-card-body h3 {
+            font-family: var(--ff-display);
+            font-size: 1rem;
+            color: var(--mist);
+            margin-bottom: 6px;
+        }
+
+        .prog-card-body p {
+            font-size: 0.8rem;
+            color: rgba(184,217,196,0.55);
+            line-height: 1.55;
+            margin-bottom: 12px;
+        }
+
+        
+        .prog-btn {
+            display: inline-block;
+            padding: 7px 16px;
+            border: 1px solid var(--sage);
+            background: transparent;
+            color: var(--sage);
+            font-size: 0.72rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-family: var(--ff-body);
+            cursor: pointer;
+            border-radius: 2px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .prog-btn:hover {
+            background: var(--sage);
+            color: var(--forest);
+        }
+
+        /* 8. Reviews section */
+        .reviews {
+            background: var(--parchment);
+            padding: 80px 52px;
+        }
+
+        .reviews h2 { color: var(--forest); margin-bottom: 6px; }
+
+        .rating-summary {
+            display: flex;
+            align-items: baseline;
+            gap: 14px;
+            margin-bottom: 36px;
+        }
+
+        .rating-num {
+            font-family: var(--ff-display);
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--forest);
+            line-height: 1;
+        }
+
+        .rating-detail {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .rating-label {
+            font-family: var(--ff-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--forest);
+        }
+
+        .rating-count {
+            font-size: 0.78rem;
+            color: var(--moss);
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        /* 9. Individual review card */
+        .review-card {
+            background: var(--warm-white);
+            border: 1px solid var(--parchment);
+            border-radius: 4px;
+            padding: 24px;
+        }
+
+        .review-card h4 {
+            font-family: var(--ff-display);
+            font-size: 1rem;
+            color: var(--forest);
+            margin-bottom: 8px;
+        }
+
+        .review-card p {
+            font-size: 0.83rem;
+            color: #5a7468;
+            line-height: 1.65;
+            margin-bottom: 14px;
+        }
+
+        .review-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.72rem;
+            color: var(--moss);
+            padding-top: 12px;
+            border-top: 1px solid var(--parchment);
+        }
+
+        .review-rating {
+            font-family: var(--ff-display);
+            font-weight: 700;
+            color: var(--forest);
+        }
+
+       
+        .feedback-form-section {
+            background: var(--forest);
+            padding: 100px 52px;
+        }
+
+        .feedback-form-section h2 {
+            color: var(--warm-white);
+            margin-bottom: 8px;
+        }
+
+        .feedback-form-section > p {
+            color: rgba(184,217,196,0.6);
+            font-size: 0.88rem;
+            margin-bottom: 48px;
+            max-width: 480px;
+        }
+
+        .feedback-box {
+            max-width: 720px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(184,217,196,0.1);
+            border-radius: 4px;
+            padding: 48px;
+        }
+
+       
+        fieldset {
+            border: 1px solid rgba(184,217,196,0.15);
+            border-radius: 4px;
+            padding: 28px;
+            margin-bottom: 28px;
+        }
+
+        legend {
+            font-size: 0.68rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--sage);
+            font-weight: 500;
+            padding: 0 10px;
+        }
+
+        
+        .form-label {
+            display: block;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(184,217,196,0.6);
+            font-weight: 500;
+            margin-top: 20px;
+            margin-bottom: 6px;
+        }
+
+        .form-label:first-of-type { margin-top: 0; }
+
+        
+        .form-input,
+        .form-textarea,
+        .form-select {
+            width: 100%;
+            padding: 10px 14px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(184,217,196,0.2);
+            color: var(--warm-white);
+            border-radius: 3px;
+            font-family: var(--ff-body);
+            font-size: 0.88rem;
+            font-weight: 300;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .form-textarea { resize: vertical; min-height: 90px; }
+
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus { border-color: var(--sage); }
+
+        
+        .form-select option { background: var(--forest); color: var(--warm-white); }
+
+        
+        .char-counter {
+            font-size: 0.72rem;
+            color: rgba(184,217,196,0.4);
+            text-align: right;
+            margin-top: 5px;
+            transition: color 0.3s;
+        }
+
+        .char-counter.warning { color: #e8a060; }
+
+        
+        .field-error {
+            font-size: 0.75rem;
+            color: #e07060;
+            margin-top: 5px;
+            min-height: 1.1em;
+            display: block;
+        }
+
+        
+        .submit-btn {
+            width: 100%;
+            margin-top: 8px;
+            padding: 14px;
+            background: var(--moss);
+            border: none;
+            color: var(--ivory);
+            font-family: var(--ff-body);
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: background 0.3s;
+        }
+
+        .submit-btn:hover { background: var(--forest); }
+
+        
+        .success-msg {
+            margin-top: 20px;
+            padding: 16px 20px;
+            background: rgba(90,158,114,0.15);
+            border: 1px solid rgba(90,158,114,0.3);
+            border-radius: 3px;
+            color: var(--mist);
+            font-size: 0.88rem;
+            display: none;
+        }
+
+        .success-msg.show { display: block; }
+
+        
+        @media (max-width: 960px) {
+            .feedback-hero { padding: 100px 20px 60px; }
+            .programmes { padding: 60px 20px; }
+            .cards-scroll { grid-template-columns: 1fr; }
+            .reviews { padding: 60px 20px; }
+            .reviews-grid { grid-template-columns: 1fr; }
+            .feedback-form-section { padding: 60px 20px; }
+            .feedback-box { padding: 28px 20px; }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    
+    <header>
+        <nav>
+            <a href="home.html" class="nav-logo">Climate Action</a>
+            <ul class="nav-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="ais.html">Action Simulator</a></li>
+                <li><a href="feedback.html" class="active">Feedback</a></li>
+                <li><a href="team.html">Team</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="sitemap.html">Sitemap</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        
+        <section class="feedback-hero">
+            <div class="feedback-hero-deco" aria-hidden="true">F</div>
+            <div class="feedback-hero-content">
+                <span class="feedback-hero-tag">SDG 13 — Climate Action</span>
+                <h1>
+                    Programmes &amp;
+                    <strong>Feedback</strong>
+                </h1>
+                <p class="feedback-hero-sub">
+                    Explore climate action opportunities and share your thoughts to help us improve.
+                </p>
+            </div>
+        </section>
+
+        
+        <section class="programmes">
+            <span class="section-label" style="color:var(--sage)">Get Involved</span>
+            <h2>Climate Programmes</h2>
+
+            <div class="programmes-controls">
+                <p>Sort by</p>
+                <select class="sort-select" aria-label="Sort programmes">
+                    <option>Most Popular</option>
+                    <option>Nearest</option>
+                    <option>Student Friendly</option>
+                </select>
+            </div>
+
+            <div class="cards-scroll" role="region" aria-label="Scrollable list of programmes">
+                <div class="prog-card">
+                    <img src="images/volunteer.jpg" alt="Volunteers planting trees in a park">
+                    <div class="prog-card-body">
+                        <h3>Tree Planting</h3>
+                        <p>Join local environmental conservation efforts and help restore green spaces across the city.</p>
+                        <button class="prog-btn">Join</button>
+                    </div>
+                </div>
+
+                <div class="prog-card">
+                    <img src="images/plastic-free.jpg" alt="Volunteers collecting plastic waste on a beach">
+                    <div class="prog-card-body">
+                        <h3>Beach Cleanup</h3>
+                        <p>Help protect marine ecosystems by removing plastic waste from coastal areas near you.</p>
+                        <button class="prog-btn">Join</button>
+                    </div>
+                </div>
+
+                <div class="prog-card">
+                    <img src="images/recycle.jpg" alt="Recycling bins with sorted materials">
+                    <div class="prog-card-body">
+                        <h3>Recycling Programme</h3>
+                        <p>Learn how to recycle correctly and promote sustainable waste management in your community.</p>
+                        <button class="prog-btn">Learn More</button>
+                    </div>
+                </div>
+
+                <div class="prog-card">
+                    <img src="images/climate.jpg" alt="Students at a climate awareness workshop">
+                    <div class="prog-card-body">
+                        <h3>Climate Workshops</h3>
+                        <p>Attend expert-led workshops on climate science, sustainability, and how to take meaningful action.</p>
+                        <button class="prog-btn">Join</button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        
+        <section class="reviews">
+            <span class="section-label">What People Say</span>
+            <h2>Ratings &amp; Reviews</h2>
+
+            <div class="rating-summary">
+                <span class="rating-num">8.6</span>
+                <div class="rating-detail">
+                    <span class="rating-label">Excellent</span>
+                    <span class="rating-count">Based on 120 verified reviews</span>
+                </div>
+            </div>
+
+            <div class="reviews-grid">
+
+                <div class="review-card">
+                    <h3>Great Experience</h3>
+                    <p>The tree planting event was incredibly well organised. Would recommend to any student looking to make a real difference. <a href="#">See more</a></p>
+                    <div class="review-meta">
+                        <span>John D. — March 2025</span>
+                        <span class="review-rating">9 / 10</span>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <h3>Well Organised</h3>
+                    <p>The beach cleanup was a brilliant experience. Loved meeting like-minded people who care about the environment. <a href="#">See more</a></p>
+                    <div class="review-meta">
+                        <span>Anna K. — February 2025</span>
+                        <span class="review-rating">8 / 10</span>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <h4>Highly Recommend</h4>
+                    <p>As a student, this programme gave me practical skills and a strong sense of purpose. Perfect for anyone passionate about sustainability. <a href="#">See more</a></p>
+                    <div class="review-meta">
+                        <span>Sam L. — January 2025</span>
+                        <span class="review-rating">9 / 10</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        
+        <section class="feedback-form-section">
+            <span class="section-label" style="color:var(--sage)">Your Voice</span>
+            <h2>Send Us Your Feedback</h2>
+            <p>All fields marked * are required. Your feedback helps us improve our programmes.</p>
+
+            <div class="feedback-box">
+                <form id="feedbackForm" novalidate>
+
+                    
+                    <fieldset>
+                        <legend>Personal Details</legend>
+
+                        <label class="form-label" for="name">Full Name *</label>
+                        <input class="form-input" type="text" id="name" name="name" placeholder="e.g. Jane Smith" required>
+                        <span class="field-error" id="nameError"></span>
+
+                        <label class="form-label" for="email">Email Address *</label>
+                        <input class="form-input" type="email" id="email" name="email" placeholder="e.g. jane@example.com" required>
+                        <span class="field-error" id="emailError"></span>
+
+                        <label class="form-label" for="tel">Telephone Number</label>
+                        <input class="form-input" type="tel" id="tel" name="tel" placeholder="e.g. +44 7700 900000">
+
+                        <label class="form-label" for="address">Address</label>
+                        <textarea class="form-textarea" id="address" name="address" placeholder="Your address (optional)"></textarea>
+                    </fieldset>
+
+                    
+                    <fieldset>
+                        <legend>Feedback Details</legend>
+
+                        <label class="form-label" for="message">Message * <span style="font-weight:300;text-transform:none;letter-spacing:0;">(max 150 characters)</span></label>
+                        <textarea class="form-textarea" id="message" name="message" maxlength="150" placeholder="Share your thoughts..." required></textarea>
+                        <p class="char-counter" id="counter" aria-live="polite">150 characters remaining</p>
+                        <span class="field-error" id="messageError"></span>
+
+                        <label class="form-label" for="programme">Programme</label>
+                        <select class="form-select" id="programme" name="programme">
+                            <option value="">— Select a programme —</option>
+                            <option>Tree Planting</option>
+                            <option>Beach Cleanup</option>
+                            <option>Recycling Programme</option>
+                            <option>Climate Workshops</option>
+                        </select>
+
+                        <label class="form-label" for="visitDate">Date of Visit</label>
+                        <input class="form-input" type="date" id="visitDate" name="visitDate">
+
+                        <label class="form-label" for="visitDateTime">Preferred Contact Date &amp; Time</label>
+                        <input class="form-input" type="datetime-local" id="visitDateTime" name="visitDateTime">
+                    </fieldset>
+
+                    <button type="submit" class="submit-btn">Submit Feedback</button>
+
+                </form>
+
+                
+                <div class="success-msg" id="successMsg" role="status" aria-live="polite">
+                    ✓ Thank you for your feedback! We will be in touch soon.
+                </div>
+            </div>
+        </section>
+
+    </main>
+>
+    <footer>
+        <div class="footer-brand">
+            <span class="footer-logo">Climate Action</span>
+            <p>University of Westminster — SDG 13</p>
+        </div>
+        <div class="footer-links">
+            <a href="pageEditor_ST3.html">Page Editor</a>
+            <a href="validation_ST3.html">Validation</a>
+            <a href="#">Accessibility</a>
+        </div>
+        <div class="footer-meta">
+            <p>Student 3 — Feedback Page</p>
+            <p>&copy; 2026 Climate Action Group</p>
+        </div>
+    </footer>
+
+    
+    <script src="feedback.js"></script>
+
+    
+    <script>
+        document.querySelectorAll('a[href]').forEach(link => {
+            const href = link.getAttribute('href');
+            if (!href || href.startsWith('#') || href.startsWith('http')) return;
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                document.body.classList.add('fade-out');
+                setTimeout(() => { window.location.href = href; }, 350);
+            });
+        });
+    </script>
+
+</body>
+</html>

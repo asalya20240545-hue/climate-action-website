@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Action Impact Simulator — Climate Action</title>
+    <link rel="stylesheet" href="CWK/style.css">
+
+    <style>
+
+        /* 1. Smooth background image transition when impact level changes */
+        body { transition: background 0.6s ease; }
+
+        /* 2. AIS hero banner — dark gradient consistent with site */
+        .ais-hero {
+            background:
+                radial-gradient(ellipse 60% 80% at 100% 0%, rgba(46,107,71,0.4) 0%, transparent 55%),
+                linear-gradient(160deg, #0e1c14 0%, #1b3a28 70%, #0a1a0e 100%);
+            padding: 120px 52px 72px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 3. Editorial grid texture */
+        .ais-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(184,217,196,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(184,217,196,0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+        }
+
+        /* 4. Decorative watermark */
+        .ais-hero-deco {
+            position: absolute;
+            right: -1vw; bottom: -2vh;
+            font-family: var(--ff-display);
+            font-size: clamp(12rem, 20vw, 24rem);
+            font-weight: 700;
+            color: rgba(184,217,196,0.04);
+            line-height: 1;
+            pointer-events: none;
+            user-select: none;
+            letter-spacing: -0.05em;
+        }
+
+        /* 5. Hero text content */
+        .ais-hero-content { position: relative; z-index: 2; max-width: 700px; }
+
+        .ais-hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.68rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--sage);
+            font-weight: 500;
+            margin-bottom: 28px;
+        }
+
+        .ais-hero-tag::before {
+            content: '';
+            width: 32px; height: 1px;
+            background: var(--sage);
+            display: block;
+        }
+
+        .ais-hero h1 {
+            color: var(--warm-white);
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            margin-bottom: 18px;
+            line-height: 1.05;
+        }
+
+        .ais-hero h1 strong { font-weight: 700; display: block; }
+
+        .ais-hero-sub {
+            font-size: 0.95rem;
+            color: rgba(247,243,236,0.5);
+            max-width: 520px;
+            line-height: 1.75;
+            font-weight: 300;
+        }
+
+        /* 6. Main cards section wrapper */
+        .ais-body {
+            padding: 80px 52px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 7. 3x2 action cards grid */
+        .ais-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 48px;
+        }
+
+        /* 8. Individual action card */
+        .ais-card {
+            background: var(--warm-white);
+            border: 1px solid var(--parchment);
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s var(--ease-out), box-shadow 0.3s, border-color 0.3s;
+        }
+
+        .ais-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 16px 36px rgba(14,28,20,0.12);
+        }
+
+        /* 9. Selected card state */
+        .ais-card.selected {
+            border: 2px solid var(--sage);
+            background: var(--ivory);
+        }
+
+        .ais-card.selected .ais-card-img { filter: brightness(1); }
+
+        .ais-card-img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            display: block;
+            filter: brightness(0.85) saturate(0.8);
+            transition: filter 0.3s;
+        }
+
+        /* 10. Card text content */
+        .ais-card-body { padding: 18px 20px 22px; }
+
+        .ais-card-body h3 { color: var(--forest); margin-bottom: 6px; font-size: 1.05rem; }
+
+        .ais-card-body p { font-size: 0.85rem; color: #5a7468; line-height: 1.55; margin-bottom: 12px; }
+
+        .ais-points {
+            display: inline-block;
+            font-size: 0.68rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--sage);
+            font-weight: 500;
+        }
+
+        .ais-card.selected .ais-points { color: var(--moss); }
+
+        /* 11. Feedback / results box */
+        .ais-feedback {
+            background: var(--forest);
+            border-radius: 4px;
+            padding: 36px 40px;
+            text-align: center;
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        .ais-feedback h2 {
+            font-family: var(--ff-display);
+            font-size: 1.1rem;
+            color: rgba(184,217,196,0.5);
+            font-weight: 500;
+            margin-bottom: 12px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .ais-score {
+            font-family: var(--ff-display);
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--mist);
+            line-height: 1;
+            margin-bottom: 16px;
+        }
+
+        .ais-message {
+            font-size: 0.9rem;
+            color: rgba(184,217,196,0.7);
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        /* 12. Responsive */
+        @media (max-width: 900px) {
+            .ais-hero { padding: 100px 20px 60px; }
+            .ais-body { padding: 60px 20px; }
+            .ais-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 500px) {
+            .ais-grid { grid-template-columns: 1fr; }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <a href="home.html" class="nav-logo">Climate Action</a>
+            <ul class="nav-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="ais.html" class="active">Action Simulator</a></li>
+                <li><a href="feedback.html">Feedback</a></li>
+                <li><a href="team.html">Team</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="sitemap.html">Sitemap</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <section class="ais-hero">
+            <div class="ais-hero-deco" aria-hidden="true">A</div>
+            <div class="ais-hero-content">
+                <span class="ais-hero-tag">SDG 13 — Climate Action</span>
+                <h1>Action Impact <strong>Simulator</strong></h1>
+                <p class="ais-hero-sub">Select the climate actions you take in daily life and see your combined impact score. Every choice counts.</p>
+            </div>
+        </section>
+
+        <section class="ais-body">
+            <span class="section-label">Pick Your Actions</span>
+
+            <div class="ais-grid">
+
+                <div class="ais-card" data-points="2">
+                    <img class="ais-card-img" src="images/climate2.jpg" alt="Person using reusable bags while shopping">
+                    <div class="ais-card-body">
+                        <h3>Reusable Bags</h3>
+                        <p>Reduce plastic waste in daily life by switching to reusable alternatives.</p>
+                        <span class="ais-points">+2 impact points</span>
+                    </div>
+                </div>
+
+                <div class="ais-card" data-points="3">
+                    <img class="ais-card-img" src="images/climate3.jpg" alt="Passengers boarding a public bus">
+                    <div class="ais-card-body">
+                        <h3>Public Transport</h3>
+                        <p>Lower your carbon footprint by choosing buses, trains, and trams over driving.</p>
+                        <span class="ais-points">+3 impact points</span>
+                    </div>
+                </div>
+
+                <div class="ais-card" data-points="4">
+                    <img class="ais-card-img" src="images/climate4.jpg" alt="Hand switching off a light to save energy">
+                    <div class="ais-card-body">
+                        <h3>Save Energy</h3>
+                        <p>Turn off unused lights and unplug devices to cut household emissions.</p>
+                        <span class="ais-points">+4 impact points</span>
+                    </div>
+                </div>
+
+                <div class="ais-card" data-points="5">
+                    <img class="ais-card-img" src="images/climate5.jpg" alt="Volunteer planting a young tree in soil">
+                    <div class="ais-card-body">
+                        <h3>Plant Trees</h3>
+                        <p>Absorb CO₂ and restore ecosystems through local planting initiatives.</p>
+                        <span class="ais-points">+5 impact points</span>
+                    </div>
+                </div>
+
+                <div class="ais-card" data-points="3">
+                    <img class="ais-card-img" src="images/climate2.jpg" alt="Sorted recycling bins with different materials">
+                    <div class="ais-card-body">
+                        <h3>Reduce Waste</h3>
+                        <p>Minimise landfill contribution through composting and careful recycling.</p>
+                        <span class="ais-points">+3 impact points</span>
+                    </div>
+                </div>
+
+                <div class="ais-card" data-points="4">
+                    <img class="ais-card-img" src="images/climate3.jpg" alt="Solar panels on a rooftop generating clean energy">
+                    <div class="ais-card-body">
+                        <h3>Clean Energy</h3>
+                        <p>Support and switch to renewable energy sources to reduce fossil fuel use.</p>
+                        <span class="ais-points">+4 impact points</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Feedback / Results -->
+            <!-- Impact thresholds: Low = 0-5, Medium = 6-12, High = 13+ -->
+            <div class="ais-feedback" aria-live="polite">
+                <h2>Your Impact Score</h2>
+                <div class="ais-score" id="total">0</div>
+                <p class="ais-message" id="message">Select actions above to calculate your climate impact.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- SHARED FOOTER — Student 2 -->
+    <footer>
+        <div class="footer-brand">
+            <span class="footer-logo">Climate Action</span>
+            <p>University of Westminster — SDG 13</p>
+        </div>
+        <div class="footer-links">
+            <a href="pageEditor_ST2.html">Page Editor</a>
+            <a href="validation_ST2.html">Validation</a>
+            <a href="#">Accessibility</a>
+        </div>
+        <div class="footer-meta">
+            <p>Student 2 — Action Simulator</p>
+            <p>&copy; 2026 Climate Action Group</p>
+        </div>
+    </footer>
+
+    <script>
+        let total = 0;
+
+        document.querySelectorAll('.ais-card').forEach(card => {
+            card.addEventListener('click', () => {
+                card.classList.toggle('selected');
+                const points = Number(card.dataset.points);
+                total += card.classList.contains('selected') ? points : -points;
+
+                document.getElementById('total').textContent = total;
+
+                // Impact thresholds: Low ≤5, Medium ≤12, High 13+
+                let message = '';
+                if (total <= 5) {
+                    message = 'Low Impact — every action counts, keep going!';
+                    document.body.style.background =
+                        "linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/low.jpg') center/cover";
+                } else if (total <= 12) {
+                    message = "Medium Impact — you're making a real difference!";
+                    document.body.style.background =
+                        "linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/medium.jpg') center/cover";
+                } else {
+                    message = 'High Impact — excellent commitment to the planet!';
+                    document.body.style.background =
+                        "linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/high.jpg') center/cover";
+                }
+
+                if (total === 0) {
+                    document.body.style.background = '';
+                    message = 'Select actions above to calculate your climate impact.';
+                }
+
+                document.getElementById('message').textContent = message;
+            });
+        });
+
+        // Page transition
+        document.querySelectorAll('a[href]').forEach(link => {
+            const href = link.getAttribute('href');
+            if (!href || href.startsWith('#') || href.startsWith('http')) return;
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                document.body.classList.add('fade-out');
+                setTimeout(() => { window.location.href = href; }, 350);
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -34,7 +34,7 @@ Additionally, I:
 * Tested responsiveness and usability
 
 
-#####Technologies Used
+##### Technologies Used
 
 * HTML5
 * CSS3

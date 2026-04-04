@@ -1,14 +1,14 @@
 
-#####Climate Action Website – SDG 13
+##### Climate Action Website – SDG 13
 
-#####Project Overview
+##### Project Overview
 
 This project is a collaborative web development coursework focused on **Sustainable Development Goal 13: Climate Action**. The website aims to raise awareness about climate change, its impacts, and actions individuals can take to contribute towards a more sustainable future.
 
 The website was designed and developed using core front-end technologies, following accessibility and usability best practices.
 
 
- #####Team Contribution
+ ##### Team Contribution
 
 This was a group project consisting of three members, where each student was responsible for specific sections of the website
 My Contribution (Student 3)
@@ -42,7 +42,7 @@ Additionally, I:
 * GitHub (Version Control & Deployment)
 
 
-#####Skills Gained
+##### Skills Gained
 
 Through this project, I developed and improved the following skills:
 
@@ -68,7 +68,7 @@ Through this project, I developed and improved the following skills:
 https://asalya20240545-hue.github.io/climate-action-website/
 
 
-#####Future Improvements
+##### Future Improvements
 
 * Add form validation using JavaScript
 * Improve animations and interactivity
